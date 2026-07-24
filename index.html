@@ -91,8 +91,213 @@ MAINTENANCE NOTES:
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Ultimate Notebook</title>
+<script src="./support.js"></script>
 </head>
 <body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&amp;family=IM+Fell+English+SC&amp;display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #fcfbf7; }
+  * { box-sizing: border-box; }
+  ::selection { background: rgba(22,21,15,0.16); }
+  a { color: #16150f; text-decoration: none; border-bottom: 1.4px solid rgba(22,21,15,0.55); transition: border-color .15s, background .15s; }
+  a:hover { background: rgba(22,21,15,0.06); border-bottom-color: #16150f; }
+  [data-reveal] { opacity: 0; transform: translateY(12px); transition: opacity .9s ease, transform .9s ease; }
+  [data-reveal].seen { opacity: 1; transform: none; }
+  @keyframes flrevealsafe { to { opacity: 1; transform: none; } }
+  [data-reveal] { animation: flrevealsafe .01s linear 2.5s forwards; }
+  .drill { border-bottom: 1.6px dotted #16150f; cursor: help; }
+  .dimmed { opacity: .1; transition: opacity .4s; }
+  mark { background: rgba(22,21,15,0.14); color: inherit; padding: 0 1px; }
+  .fl-btn { font-family: 'IM Fell English SC', serif; font-size: 14px; letter-spacing: 2px; color: #16150f; background: transparent; border: 1px solid #16150f; border-radius: 0; padding: 5px 14px; cursor: pointer; transition: background .15s, color .15s; }
+  .fl-btn:hover { background: #16150f; color: #fcfbf7; }
+  .fl-btn.solid { background: #16150f; color: #fcfbf7; }
+  .fl-btn.solid:hover { background: #3a382e; }
+  .fl-btn:disabled { opacity: .35; cursor: default; }
+  .fl-btn:disabled:hover { background: transparent; color: #16150f; }
+  .fl-chip { font-family: 'IM Fell English SC', serif; font-size: 13px; letter-spacing: 1px; border: 1px solid #16150f; padding: 4px 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; background: transparent; color: #16150f; }
+  .fl-chip.on { background: #16150f; color: #fcfbf7; }
+  textarea.fl-ta { font-family: 'IM Fell English', serif; font-size: 17px; line-height: 1.6; color: #16150f; background: #fcfbf7; border: 1px solid #16150f; padding: 12px 14px; width: 100%; resize: vertical; outline: none; }
+  @keyframes flpulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+  .fl-think { animation: flpulse 1.4s ease infinite; }
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #f1efe7; }
+  ::-webkit-scrollbar-thumb { background: #c9c5b6; }
+  @media print {
+    #fl-toolbar, #fl-rail, #fl-atlas, #fl-summons, #fl-trial, #fl-pop { display: none !important; }
+    [data-reveal] { opacity: 1 !important; transform: none !important; }
+    .dimmed { opacity: 1 !important; }
+    article, section { break-inside: avoid; }
+  }
+</style>
+</helmet>
+
+<!-- ============================ TOOLBAR ============================ -->
+<div id="fl-toolbar" style="position: fixed; top: 0; left: 0; right: 0; z-index: 60; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 14px; padding: 9px 16px; background: rgba(252,251,247,0.93); backdrop-filter: blur(6px); border-bottom: 1px solid #16150f;">
+  <input id="fl-search" type="text" placeholder="Search the book…" style="font-family: 'IM Fell English', serif; font-size: 16px; color: #16150f; background: transparent; border: 1px solid #16150f; padding: 4px 14px; width: 190px; outline: none;">
+  <div id="fl-status" style="display: flex; flex-wrap: wrap; gap: 6px;"></div>
+  <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+    <button id="fbtn-atlas" class="fl-btn">✳ Atlas</button>
+    <button id="fbtn-orrery" class="fl-btn">◉ Orrery</button>
+    <button id="fbtn-chron" class="fl-btn">Chronicle</button>
+    <button id="fbtn-cal" class="fl-btn">▦ Calendar</button>
+    <button id="fbtn-tree" class="fl-btn">🌳 Tree</button>
+    <button id="fbtn-summons" class="fl-btn">Summons</button>
+    <button id="fbtn-bind" class="fl-btn">Bind ⤓</button>
+  </div>
+</div>
+
+<div id="fl-rail" style="position: fixed; right: 12px; top: 50%; transform: translateY(-50%); z-index: 55; display: flex; flex-direction: column; gap: 9px; align-items: flex-end;"></div>
+<div id="fl-atlas" style="position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center; background: rgba(22,21,15,0.5);"></div>
+<div id="fl-orrery" style="position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center; background: rgba(22,21,15,0.5);"></div>
+<div id="fl-chron" style="position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center; background: rgba(22,21,15,0.5);"></div>
+<div id="fl-cal" style="position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center; background: rgba(22,21,15,0.5);"></div>
+<div id="fl-tree" style="position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center; background: rgba(22,21,15,0.5);"></div>
+<div id="fl-summons" style="position: fixed; right: 16px; top: 58px; z-index: 80; display: none; background: #fcfbf7; border: 1.5px solid #16150f; padding: 20px 22px; box-shadow: 8px 8px 0 rgba(22,21,15,0.16); width: 340px; max-height: 76vh; overflow: auto;"></div>
+
+<!-- ============================ TRIAL ============================ -->
+<div id="fl-trial" style="position: fixed; inset: 0; z-index: 90; display: none; align-items: center; justify-content: center; background: rgba(22,21,15,0.55); padding: 20px;">
+  <div style="background: #fcfbf7; border: 1.5px solid #16150f; box-shadow: 10px 10px 0 rgba(22,21,15,0.2); width: min(760px, 96vw); max-height: 92vh; display: flex; flex-direction: column;">
+    <div style="border-bottom: 1px solid #16150f; padding: 18px 26px; display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+      <div>
+        <div style="font-family: 'IM Fell English SC', serif; font-size: 13px; letter-spacing: 4px; color: #16150f;">The Trial</div>
+        <div id="fl-trial-title" style="font-family: 'IM Fell English', serif; font-size: 26px; color: #16150f;"></div>
+      </div>
+      <button id="fl-trial-close" class="fl-btn">Withdraw ✕</button>
+    </div>
+    <div id="fl-trial-log" style="flex: 1; overflow: auto; padding: 22px 26px; display: flex; flex-direction: column; gap: 16px;"></div>
+    <div style="border-top: 1px solid #16150f; padding: 16px 26px; display: flex; flex-direction: column; gap: 10px;">
+      <textarea id="fl-trial-input" class="fl-ta" rows="4" placeholder="Speak from memory, keeper — no peeking at the passage…"></textarea>
+      <div style="display: flex; gap: 10px; justify-content: space-between; flex-wrap: wrap;">
+        <button id="fl-trial-concede" class="fl-btn">Concede the crack</button>
+        <button id="fl-trial-send" class="fl-btn solid">Submit to the examiner</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="background: #fcfbf7; color: #16150f; font-family: 'IM Fell English', Georgia, serif;">
+
+  <!-- ========================= FRONTISPIECE ========================= -->
+  <section id="front" style="min-height: 96vh; display: flex; align-items: center; justify-content: center; padding: 70px 24px 50px;">
+    <div style="border: 1.6px solid #16150f; max-width: 680px; width: 100%; padding: 8px;">
+      <div style="border: 1px solid #16150f; padding: 64px 48px 52px; text-align: center;">
+        <div style="border: 1px solid #16150f; display: inline-block; padding: 24px 30px;">
+          <svg viewBox="0 0 160 90" style="width: 156px; height: 88px;">
+            <circle cx="80" cy="45" r="34" fill="none" stroke="#16150f" stroke-width="1.4"></circle>
+            <circle cx="80" cy="45" r="22" fill="none" stroke="#16150f" stroke-width=".8" stroke-dasharray="3 3"></circle>
+            <circle cx="80" cy="45" r="4.5" fill="#16150f"></circle>
+            <circle cx="114" cy="45" r="3" fill="none" stroke="#16150f" stroke-width="1.2"></circle>
+            <circle cx="46" cy="45" r="3" fill="#16150f"></circle>
+            <line x1="8" y1="45" x2="34" y2="45" stroke="#16150f" stroke-width=".8"></line>
+            <line x1="126" y1="45" x2="152" y2="45" stroke="#16150f" stroke-width=".8"></line>
+          </svg>
+        </div>
+        <div style="font-family: 'IM Fell English SC', serif; font-size: 15px; letter-spacing: 6px; margin: 32px 0 14px;">The Map of One Mind</div>
+        <h1 style="font-family: 'IM Fell English', serif; font-weight: 400; font-size: 62px; line-height: 1.02; margin: 0;">The Ultimate<br>Notebook</h1>
+        <div style="display: flex; align-items: center; gap: 12px; justify-content: center; margin: 28px 0;"><span style="width: 52px; height: 1px; background: #16150f;"></span><span style="font-size: 15px;">❦</span><span style="width: 52px; height: 1px; background: #16150f;"></span></div>
+        <p style="font-family: 'IM Fell English', serif; font-style: italic; font-size: 21px; line-height: 1.55; color: #3a382e; max-width: 32ch; margin: 0 auto;">Being a faithful record of everything its keeper knows, longs to know, or refuses to forget — one running book, never sorted, never filed.</p>
+        <div style="font-family: 'IM Fell English SC', serif; font-size: 12px; letter-spacing: 4px; margin-top: 40px;">Compiled · MMXXVI</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= CONTENT GOES HERE ========================= -->
+  <!-- Add your passages, articles, proem, index, and colophon below this line -->
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"paper":{"editor":"color","default":"#fcfbf7","tsType":"string","options":["#fcfbf7","#ffffff","#f7f4ea"],"section":"The Page"},"showRail":{"editor":"boolean","default":true,"tsType":"boolean","section":"The Page"},"decayDays":{"editor":"int","default":180,"min":30,"max":730,"unit":"days","tsType":"number","section":"The Doctrine"}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    try {
+      const doc = document, $ = (s) => doc.querySelector(s);
+      const DECAY_DAYS = this.props.decayDays ?? 180;
+      const GLYPH = { owned: '■', held: '□', progress: '◧', spark: '◇', question: '◌' };
+      const SVGNS = 'http://www.w3.org/2000/svg';
+
+      const ICON = (kind, s) => {
+        s = s || 18;
+        const st = 'vertical-align:-3px; display:inline-block;';
+        const F = '#16150f';
+        switch (kind) {
+          case 'owned': return '<svg viewBox="0 0 24 24" width="' + s + '" height="' + s + '" style="' + st + '"><circle cx="12" cy="12" r="9.2" fill="' + F + '"/><path d="M12 5.6L13.7 10.4L18.8 10.4L14.7 13.3L16.3 18L12 15.1L7.7 18L9.3 13.3L5.2 10.4L10.3 10.4Z" fill="#fcfbf7"/></svg>';
+          case 'held': return '<svg viewBox="0 0 24 24" width="' + s + '" height="' + s + '" style="' + st + '"><path d="M3.6 6L12 4L20.4 6L20.4 18L12 20L3.6 18Z" fill="none" stroke="' + F + '" stroke-width="1.5" stroke-linejoin="round"/><line x1="12" y1="4" x2="12" y2="20" stroke="' + F + '" stroke-width="1.3"/><path d="M6 8.4L9.4 9.2M6 11L9.4 11.6M6 13.4L9.4 13.8M14.6 9.2L18 8.4M14.6 11.6L18 11M14.6 13.8L18 13.4" stroke="' + F + '" stroke-width="0.7" opacity="0.55"/></svg>';
+          case 'progress': return '<svg viewBox="0 0 24 24" width="' + s + '" height="' + s + '" style="' + st + '"><path d="M12 21L12 11" stroke="' + F + '" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M12 13.5C7.5 13.5 5.5 11.5 5.2 6.8C10 6.8 12 9 12 13.5Z" fill="' + F + '"/><path d="M12 11.5C16.5 11.5 18.5 9.5 18.8 4.8C14 4.8 12 7 12 11.5Z" fill="' + F + '"/><path d="M4 21L20 21" stroke="' + F + '" stroke-width="1.4" stroke-linecap="round"/></svg>';
+          case 'spark': return '<svg viewBox="0 0 24 24" width="' + s + '" height="' + s + '" style="' + st + '" fill="' + F + '"><path d="M12 1.5C13.4 8.2 15.8 10.6 22.5 12C15.8 13.4 13.4 15.8 12 22.5C10.6 15.8 8.2 13.4 1.5 12C8.2 10.6 10.6 8.2 12 1.5Z"/><circle cx="12" cy="12" r="1.6" fill="#fcfbf7"/></svg>';
+          case 'question': return '<svg viewBox="0 0 24 24" width="' + s + '" height="' + s + '" style="' + st + '"><circle cx="7.5" cy="12" r="4.2" fill="none" stroke="' + F + '" stroke-width="1.5"/><circle cx="7.5" cy="12" r="1.4" fill="' + F + '"/><path d="M11.6 12L21.5 12" stroke="' + F + '" stroke-width="1.5" stroke-linecap="round"/><path d="M17.5 12L17.5 15.5" stroke="' + F + '" stroke-width="1.5" stroke-linecap="round"/><path d="M20.5 12L20.5 14.5" stroke="' + F + '" stroke-width="1.5" stroke-linecap="round"/></svg>';
+        }
+        return GLYPH[kind] || '';
+      };
+
+      const STANDING = { owned: 'Owned · sealed', held: 'Held · awaiting the trial', progress: 'A Living Work · in progress', spark: 'A Spark · caught in passing', question: 'An Open Question · unanswered' };
+
+      // ===== PASSAGES — add your content here =====
+      const PASSAGES = [];
+      const byId = {}; PASSAGES.forEach(p => byId[p.id] = p);
+
+      // persisted overrides
+      let saved = {}; try { saved = JSON.parse(localStorage.getItem('unf_state_v1') || '{}'); } catch (e) {}
+      PASSAGES.forEach(p => { const s = saved[p.id]; if (s) { if (s.status) p.status = s.status; if (s.sealedOn) p.sealedOn = s.sealedOn; if (s.crack) p.crack = s.crack; } });
+      const persist = () => { const out = {}; PASSAGES.forEach(p => { out[p.id] = { status: p.status, sealedOn: p.sealedOn || null, crack: p.crack || null }; }); try { localStorage.setItem('unf_state_v1', JSON.stringify(out)); } catch (e) {} };
+
+      const back = {}; PASSAGES.forEach(p => back[p.id] = []);
+      PASSAGES.forEach(p => p.links.forEach(l => { if (back[l] && back[l].indexOf(p.id) < 0) back[l].push(p.id); }));
+      const today = () => new Date().toISOString().slice(0, 10);
+      const fmt = (d) => new Date(d + 'T00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      const dueOn = (p) => { if (!p.sealedOn) return null; const d = new Date(p.sealedOn + 'T00:00'); d.setDate(d.getDate() + DECAY_DAYS); return d.toISOString().slice(0, 10); };
+      const isOverdue = (p) => p.status === 'owned' && dueOn(p) && dueOn(p) <= today();
+      const daysLeft = (p) => Math.ceil((new Date(dueOn(p) + 'T00:00') - new Date(today() + 'T00:00')) / 86400000);
+
+      // ===== reveal =====
+      this._io = new IntersectionObserver((es) => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('seen'); this._io.unobserve(en.target); } }), { threshold: 0.1 });
+      doc.querySelectorAll('[data-reveal]').forEach(el => this._io.observe(el));
+
+      // ===== stubs — build these out as you add content =====
+      const renderPassageChrome = () => {};
+      const renderIndex = () => {};
+      const applyFilters = () => {};
+      const mkChips = () => {};
+
+      // ===== nav =====
+      const jump = (id) => { const el = doc.getElementById(id); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 58, behavior: 'smooth' }); };
+
+      // ===== overlays =====
+      const overlays = ['#fl-atlas', '#fl-summons', '#fl-trial', '#fl-orrery', '#fl-chron', '#fl-cal', '#fl-tree'];
+      const closeOverlays = () => overlays.forEach(s => { const el = $(s); if (el) el.style.display = 'none'; });
+      doc.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeOverlays(); });
+
+      // ===== toolbar button stubs =====
+      $('#fbtn-atlas').onclick = () => { closeOverlays(); /* TODO: buildAtlas */ };
+      $('#fbtn-orrery').onclick = () => { closeOverlays(); /* TODO: buildOrrery */ };
+      $('#fbtn-chron').onclick = () => { closeOverlays(); /* TODO: buildChron */ };
+      $('#fbtn-cal').onclick = () => { closeOverlays(); /* TODO: buildCal */ };
+      $('#fbtn-tree').onclick = () => { closeOverlays(); /* TODO: buildTree */ };
+      $('#fbtn-summons').onclick = () => { closeOverlays(); /* TODO: buildSummons */ };
+      $('#fbtn-bind').onclick = () => { closeOverlays(); window.print(); };
+      $('#fl-trial-close').onclick = closeOverlays;
+
+      renderPassageChrome(); renderIndex(); mkChips();
+    } catch (err) {
+      console.error('Notebook setup error:', err);
+      document.querySelectorAll('[data-reveal]').forEach(el => el.classList.add('seen'));
+    }
+  }
+
+  componentWillUnmount() {
+    if (this._io) this._io.disconnect();
+  }
+
+  renderVals() {
+    return {
+      paper: this.props.paper ?? '#fcfbf7',
+      railDisplay: (this.props.showRail ?? true) ? 'flex' : 'none',
+    };
+  }
+}
+</script>
 </body>
 </html>
