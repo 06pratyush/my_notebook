@@ -1,36 +1,9 @@
 <h2>Performance Metrics</h2>
 <div class="passage-meta">№ 5 · machine learning · evaluation</div>
-<p><span style="float: left; font-size: 76px; line-height: .68; padding: 10px 12px 0 0;">H</span>ow do you judge a model's worth? Not by how well it fits the training data — any model can memorise — but by how honestly it captures the underlying structure.</p>
-<div class="metric-card">
-  <h4>R² (Coefficient of Determination)</h4>
-  <div class="formula">$R^2 = 1 - \frac{\sum(y - \hat{y})^2}{\sum(y - \bar{y})^2}$</div>
-  <div class="desc">Lies between 0 and 1. Closer to 1 means less error, better prediction. Also called goodness of fit.</div>
-</div>
-<div class="metric-card">
-  <h4>Adjusted R²</h4>
-  <div class="formula">$R^2_{adj} = 1 - \frac{(1 - R^2)(n - 1)}{n - k - 1}$</div>
-  <div class="desc">Penalises the model for adding useless variables. k = number of input dimensions.</div>
-</div>
-<div class="metric-card">
-  <h4>Mean Squared Error (MSE)</h4>
-  <div class="formula">$MSE = \frac{\sum(y - \hat{y})^2}{N}$</div>
-  <div class="desc">Squaring punishes large errors more than small ones.</div>
-</div>
-<div class="metric-card">
-  <h4>Root Mean Squared Error (RMSE)</h4>
-  <div class="formula">$RMSE = \sqrt{MSE}$</div>
-  <div class="desc">Brings the error back into the original units of y.</div>
-</div>
-<div class="metric-card">
-  <h4>Mean Absolute Error (MAE)</h4>
-  <div class="formula">$MAE = \frac{\sum|y - \hat{y}|}{N}$</div>
-  <div class="desc">More robust to outliers than MSE.</div>
-</div>
-<div class="metric-card">
-  <h4>Pearson Correlation Coefficient (r)</h4>
-  <div class="formula">$r = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum(x_i - \bar{x})^2 \cdot \sum(y_i - \bar{y})^2}}$</div>
-  <div class="desc">Measures how two variables are correlated. Ranges from −1 to +1.</div>
-</div>
+<p><span style="float: left; font-size: 76px; line-height: .68; padding: 10px 12px 0 0;">H</span>ow do you judge a model's worth? Not by how well it fits the training data — any model can memorise — but by how honestly it captures the underlying structure. Several metrics exist for this, each illuminating a different facet of performance.</p>
+<p>The most common starting point is the <strong>coefficient of determination</strong>, $R^2 = 1 - \frac{\sum(y_i - \hat{y}_i)^2}{\sum(y_i - \bar{y})^2}$, which lies between 0 and 1. A value of 1 means the model explains all the variance; 0 means it does no better than predicting the mean. It is also called the <em>goodness of fit</em>. When the number of predictors grows, however, $R^2$ is misleading — it can only go up, even with useless variables. The <strong>adjusted $R^2$</strong> corrects for this: $R^2_{adj} = 1 - \frac{(1 - R^2)(n - 1)}{n - k - 1}$, where $n$ is the number of observations and $k$ the number of input dimensions. Penalising each extra variable, it only improves when the new term actually helps.</p>
+<p>From the errors themselves, the <strong>mean squared error</strong> takes the average of squared residuals: $MSE = \frac{1}{N}\sum(y_i - \hat{y}_i)^2$. Squaring punishes large errors more than small ones, making the metric sensitive to outliers. Its square root, the <strong>root mean squared error</strong>, $RMSE = \sqrt{MSE}$, brings the error back into the original units of $y$ — interpretable and comparable to the data itself. For a measure more robust to outliers, the <strong>mean absolute error</strong> uses absolute deviations instead: $MAE = \frac{1}{N}\sum|y_i - \hat{y}_i|$, which treats all errors linearly.</p>
+<p>Finally, the <strong>Pearson correlation coefficient</strong> $r = \frac{\sum(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum(x_i - \bar{x})^2 \cdot \sum(y_i - \bar{y})^2}}$ measures how two variables move together, ranging from $-1$ (perfect inverse) to $+1$ (perfect positive). It captures linear association, not causation, and is silent on nonlinear relationships. Together, these metrics form the vocabulary of model evaluation — each one a different lens on the same question: how close are the predictions to reality?</p>
 <div class="spark-section"></div>
 <div class="artifact-container"></div>
 <div class="bound" id="bound-ml005"></div>
