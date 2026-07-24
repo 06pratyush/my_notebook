@@ -23,6 +23,7 @@
   // 5. Render diagrams
   try { NBRoughDiagrams.renderAll(); } catch (e) { console.warn('Rough.js diagrams:', e); }
   try { NBD3Plots.renderAll(); } catch (e) { console.warn('D3.js plots:', e); }
+  try { NBMetricsViz.renderAll(); } catch (e) { console.warn('Metrics viz:', e); }
 
   // 6. KaTeX auto-render
   if (typeof renderMathInElement !== 'undefined') {

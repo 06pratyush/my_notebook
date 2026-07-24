@@ -12,10 +12,10 @@ window.NBRoughDiagrams = (() => {
   }
 
   function drawPipeline(container) {
-    const W = 700, H = 280;
+    const W = 740, H = 320;
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
-    svg.setAttribute('width', W); svg.setAttribute('height', H);
+    svg.setAttribute('width', '100%');
     container.appendChild(svg);
 
     const rc = rough.svg(svg);
@@ -23,13 +23,13 @@ window.NBRoughDiagrams = (() => {
     const textStyle = 'font-family: IM Fell English SC, serif; font-size: 12px; fill: #16150f; text-anchor: middle; letter-spacing: 1px;';
 
     const boxes = [
-      { x: 20, y: 110, w: 100, h: 50, label: 'DATASET' },
-      { x: 190, y: 30, w: 120, h: 50, label: 'TRAIN 70%' },
-      { x: 190, y: 200, w: 120, h: 50, label: 'TEST 30%' },
-      { x: 390, y: 30, w: 130, h: 50, label: 'MODEL BUILD' },
-      { x: 600, y: 30, w: 100, h: 50, label: 'PREDICT' },
-      { x: 420, y: 200, w: 120, h: 50, label: 'EVALUATE' },
-      { x: 620, y: 200, w: 100, h: 50, label: 'DEPLOY' },
+      { x: 20, y: 125, w: 100, h: 50, label: 'DATASET' },
+      { x: 190, y: 45, w: 120, h: 50, label: 'TRAIN 70%' },
+      { x: 190, y: 215, w: 120, h: 50, label: 'TEST 30%' },
+      { x: 390, y: 45, w: 130, h: 50, label: 'MODEL BUILD' },
+      { x: 600, y: 45, w: 120, h: 50, label: 'PREDICT' },
+      { x: 420, y: 215, w: 120, h: 50, label: 'EVALUATE' },
+      { x: 620, y: 215, w: 100, h: 50, label: 'DEPLOY' },
     ];
 
     boxes.forEach(b => {
@@ -42,14 +42,14 @@ window.NBRoughDiagrams = (() => {
 
     const arrowStyle = { stroke: '#16150f', strokeWidth: 1.2, roughness: 1 };
     const arrows = [
-      [120, 135, 190, 55],    // DATASET → TRAIN
-      [120, 135, 190, 225],   // DATASET → TEST
-      [310, 55, 390, 55],     // TRAIN → MODEL BUILD
-      [520, 55, 600, 55],     // MODEL BUILD → PREDICT
-      [650, 80, 480, 200],    // PREDICT → EVALUATE
-      [310, 225, 420, 225],   // TEST → EVALUATE
-      [540, 225, 620, 225],   // EVALUATE → DEPLOY
-      [480, 200, 455, 80],    // EVALUATE → MODEL BUILD (fail, dashed)
+      [120, 150, 190, 70],    // DATASET → TRAIN
+      [120, 150, 190, 240],   // DATASET → TEST
+      [310, 70, 390, 70],     // TRAIN → MODEL BUILD
+      [520, 70, 600, 70],     // MODEL BUILD → PREDICT
+      [660, 95, 480, 215],    // PREDICT → EVALUATE
+      [310, 240, 420, 240],   // TEST → EVALUATE
+      [540, 240, 620, 240],   // EVALUATE → DEPLOY
+      [480, 215, 455, 95],    // EVALUATE → MODEL BUILD (fail, dashed)
     ];
     arrows.forEach(([x1, y1, x2, y2], i) => {
       const style = i === arrows.length - 1
@@ -66,7 +66,7 @@ window.NBRoughDiagrams = (() => {
 
     // Label: "fail → retrain"
     const failT = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    failT.setAttribute('x', 430); failT.setAttribute('y', 140);
+    failT.setAttribute('x', 430); failT.setAttribute('y', 155);
     failT.setAttribute('style', 'font-family: IM Fell English, serif; font-size: 11px; fill: #6b675a; font-style: italic; text-anchor: middle;');
     failT.textContent = 'fail → retrain'; svg.appendChild(failT);
   }
