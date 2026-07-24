@@ -97,41 +97,50 @@ window.NBPassages = (() => {
     if (!box) return;
     box.innerHTML = '';
 
+    // Group chapters by subject
+    const grouped = {};
     for (const ch of allChapters) {
+      const key = ch._subjectTitle;
+      if (!grouped[key]) grouped[key] = [];
+      grouped[key].push(ch);
+    }
+
+    for (const [subjectTitle, chapters] of Object.entries(grouped)) {
+      const totalPassages = chapters.reduce((s, ch) => s + ch.passages.length, 0);
+
       // Subject (expandable)
       const subj = document.createElement('div');
       subj.className = 'index-subject';
       subj.innerHTML = '<span class="caret">▶</span>'
-        + '<span class="subj-title">' + ch._subjectTitle + '</span>'
-        + '<span class="subj-count">' + ch.passages.length + ' passages</span>';
+        + '<span class="subj-title">' + subjectTitle + '</span>'
+        + '<span class="subj-count">' + totalPassages + ' passages</span>';
       box.appendChild(subj);
 
       // Chapters container (collapsible)
-      const chapters = document.createElement('div');
-      chapters.className = 'index-chapters';
+      const chaptersDiv = document.createElement('div');
+      chaptersDiv.className = 'index-chapters';
 
-      // Chapter heading
-      const chHead = document.createElement('div');
-      chHead.className = 'index-chapter';
-      chHead.textContent = ch._chapterLabel + ' — ' + ch.title;
-      chapters.appendChild(chHead);
+      for (const ch of chapters) {
+        const chHead = document.createElement('div');
+        chHead.className = 'index-chapter';
+        chHead.textContent = ch._chapterLabel + ' — ' + ch.title;
+        chaptersDiv.appendChild(chHead);
 
-      // Passages
-      for (const pm of ch.passages) {
-        const a = document.createElement('a');
-        a.href = '#' + pm.id;
-        a.className = 'index-passage';
-        a.innerHTML = '<span class="pass-title">' + pm.title + '</span>'
-          + '<span class="pass-dots"></span>'
-          + '<span class="pass-meta">' + pm.tags[0] + ' · №' + pm.no + '</span>';
-        chapters.appendChild(a);
+        for (const pm of ch.passages) {
+          const a = document.createElement('a');
+          a.href = '#' + pm.id;
+          a.className = 'index-passage';
+          a.innerHTML = '<span class="pass-title">' + pm.title + '</span>'
+            + '<span class="pass-dots"></span>'
+            + '<span class="pass-meta">' + pm.tags[0] + ' · №' + pm.no + '</span>';
+          chaptersDiv.appendChild(a);
+        }
       }
 
-      box.appendChild(chapters);
+      box.appendChild(chaptersDiv);
 
-      // Toggle expand/collapse
       subj.onclick = () => {
-        const isOpen = chapters.classList.toggle('open');
+        const isOpen = chaptersDiv.classList.toggle('open');
         subj.classList.toggle('open', isOpen);
       };
     }

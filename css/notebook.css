@@ -205,7 +205,7 @@ body.admin-mode .artifact-container:empty::before {
 .metric-card h4 {
   font-family: var(--font-sc); font-size: 14px; letter-spacing: 2px; margin: 0 0 8px;
 }
-.metric-card .formula { font-size: 20px; line-height: 1.6; margin: 8px 0; }
+.metric-card .formula { font-size: 16px; line-height: 1.6; margin: 4px 0; }
 .metric-card .desc { font-style: italic; color: var(--accent); font-size: 16px; }
 
 /* --- Hierarchical Index --- */
