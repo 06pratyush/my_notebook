@@ -24,12 +24,12 @@ window.NBRoughDiagrams = (() => {
 
     const boxes = [
       { x: 20, y: 110, w: 100, h: 50, label: 'DATASET' },
-      { x: 180, y: 30, w: 120, h: 50, label: 'TRAIN 70%' },
-      { x: 180, y: 190, w: 120, h: 50, label: 'TEST 30%' },
-      { x: 360, y: 30, w: 130, h: 50, label: 'MODEL BUILD' },
-      { x: 540, y: 30, w: 130, h: 50, label: 'PREDICT' },
-      { x: 540, y: 190, w: 130, h: 50, label: 'EVALUATE' },
-      { x: 360, y: 190, w: 130, h: 50, label: 'DEPLOY' },
+      { x: 190, y: 30, w: 120, h: 50, label: 'TRAIN 70%' },
+      { x: 190, y: 200, w: 120, h: 50, label: 'TEST 30%' },
+      { x: 390, y: 30, w: 130, h: 50, label: 'MODEL BUILD' },
+      { x: 600, y: 30, w: 100, h: 50, label: 'PREDICT' },
+      { x: 420, y: 200, w: 120, h: 50, label: 'EVALUATE' },
+      { x: 620, y: 200, w: 100, h: 50, label: 'DEPLOY' },
     ];
 
     boxes.forEach(b => {
@@ -42,24 +42,31 @@ window.NBRoughDiagrams = (() => {
 
     const arrowStyle = { stroke: '#16150f', strokeWidth: 1.2, roughness: 1 };
     const arrows = [
-      [120, 135, 180, 55], [120, 135, 180, 215],
-      [300, 55, 360, 55], [490, 55, 540, 55],
-      [540, 80, 540, 190], [540, 215, 490, 215],
-      [360, 215, 200, 215],
+      [120, 135, 190, 55],    // DATASET → TRAIN
+      [120, 135, 190, 225],   // DATASET → TEST
+      [310, 55, 390, 55],     // TRAIN → MODEL BUILD
+      [520, 55, 600, 55],     // MODEL BUILD → PREDICT
+      [650, 80, 480, 200],    // PREDICT → EVALUATE
+      [310, 225, 420, 225],   // TEST → EVALUATE
+      [540, 225, 620, 225],   // EVALUATE → DEPLOY
+      [480, 200, 455, 80],    // EVALUATE → MODEL BUILD (fail, dashed)
     ];
-    arrows.forEach(([x1, y1, x2, y2]) => {
-      svg.appendChild(rc.line(x1, y1, x2, y2, arrowStyle));
+    arrows.forEach(([x1, y1, x2, y2], i) => {
+      const style = i === arrows.length - 1
+        ? { ...arrowStyle, strokeLineDash: [6, 4] }
+        : arrowStyle;
+      svg.appendChild(rc.line(x1, y1, x2, y2, style));
       // Arrowhead
       const angle = Math.atan2(y2 - y1, x2 - x1);
       const ax = x2 - 8 * Math.cos(angle - 0.4), ay = y2 - 8 * Math.sin(angle - 0.4);
       const bx = x2 - 8 * Math.cos(angle + 0.4), by = y2 - 8 * Math.sin(angle + 0.4);
-      svg.appendChild(rc.line(x2, y2, ax, ay, arrowStyle));
-      svg.appendChild(rc.line(x2, y2, bx, by, arrowStyle));
+      svg.appendChild(rc.line(x2, y2, ax, ay, style));
+      svg.appendChild(rc.line(x2, y2, bx, by, style));
     });
 
-    // Label: "Fail → back to model"
+    // Label: "fail → retrain"
     const failT = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    failT.setAttribute('x', 610); failT.setAttribute('y', 180);
+    failT.setAttribute('x', 430); failT.setAttribute('y', 140);
     failT.setAttribute('style', 'font-family: IM Fell English, serif; font-size: 11px; fill: #6b675a; font-style: italic; text-anchor: middle;');
     failT.textContent = 'fail → retrain'; svg.appendChild(failT);
   }

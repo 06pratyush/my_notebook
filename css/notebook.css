@@ -174,9 +174,18 @@ article p {
   border: 1px dashed var(--accent); padding: 16px;
   background: rgba(22,21,15,0.01);
 }
-.artifact-container:empty::before {
-  content: 'Artifacts will appear here';
-  font-style: italic; color: var(--accent);
+.spark-section:empty, .artifact-container:empty { display: none; }
+body.admin-mode .spark-section:empty, body.admin-mode .artifact-container:empty {
+  display: block; min-height: 40px; border: 1px dashed var(--accent);
+  background: rgba(22,21,15,0.01);
+}
+body.admin-mode .spark-section:empty::before {
+  content: 'Click ✎ Spark to add content';
+  font-style: italic; color: var(--accent); display: block; padding: 12px;
+}
+body.admin-mode .artifact-container:empty::before {
+  content: 'Click ✎ Artifact to add content';
+  font-style: italic; color: var(--accent); display: block; padding: 12px;
 }
 .artifact-container iframe {
   width: 100%; border: none; min-height: 400px;
