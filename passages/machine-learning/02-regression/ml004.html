@@ -1,0 +1,9 @@
+<h2>Residual Analysis</h2>
+<div class="passage-meta">№ 4 · machine learning · diagnostics</div>
+<p><span style="float: left; font-size: 76px; line-height: .68; padding: 10px 12px 0 0;">A</span> residual is the gap between what the model predicted and what actually happened — the error for a single observation. Plot every residual against the input variable <em>x</em>, and the resulting scatter plot tells you whether the <a href="#ml003">assumptions of linear regression</a> hold or have been violated.</p>
+<p>In a <strong>homoscedastic</strong> plot, the residuals scatter uniformly — a flat band of noise with no pattern. The error does not change with change in x. This is what you want: the model's mistakes are evenly distributed.</p>
+<p>In a <strong>heteroscedastic</strong> plot, the residuals fan out — the error grows wider (or narrower) as x increases. The spread is not constant; the model is more confident in some regions and less in others. When this pattern appears, the standard errors are wrong and the model needs attention.</p>
+<div class="diagram-container" data-diagram="ml004"></div>
+<div class="spark-section"></div>
+<div class="artifact-container"></div>
+<div class="bound" id="bound-ml004"></div>
