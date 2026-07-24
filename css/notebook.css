@@ -208,6 +208,52 @@ body.admin-mode .artifact-container:empty::before {
 .metric-card .formula { font-size: 20px; line-height: 1.6; margin: 8px 0; }
 .metric-card .desc { font-style: italic; color: var(--accent); font-size: 16px; }
 
+/* --- Hierarchical Index --- */
+.index-subject {
+  cursor: pointer; padding: 12px 0 8px;
+  border-bottom: 1px solid var(--ink); margin-bottom: 0;
+  display: flex; align-items: center; gap: 10px;
+  user-select: none;
+}
+.index-subject:hover { background: rgba(22,21,15,0.03); }
+.index-subject .caret {
+  display: inline-block; width: 14px; font-size: 11px;
+  transition: transform .2s; text-align: center;
+}
+.index-subject.open .caret { transform: rotate(90deg); }
+.index-subject .subj-title {
+  font-family: var(--font-body); font-size: 24px; font-weight: 400;
+}
+.index-subject .subj-count {
+  font-family: var(--font-sc); font-size: 12px; letter-spacing: 1px;
+  color: var(--accent); margin-left: auto;
+}
+.index-chapters {
+  max-height: 0; overflow: hidden;
+  transition: max-height .35s ease;
+}
+.index-chapters.open { max-height: 2000px; }
+.index-chapter {
+  padding: 8px 0 4px 28px;
+  font-family: var(--font-sc); font-size: 13px; letter-spacing: 3px;
+  color: var(--accent);
+}
+.index-passage {
+  display: flex; align-items: baseline; gap: 10px;
+  border: none; padding: 5px 0 5px 48px;
+  text-decoration: none; color: var(--ink);
+}
+.index-passage:hover { background: rgba(22,21,15,0.03); }
+.index-passage .pass-title { font-size: 18px; }
+.index-passage .pass-dots {
+  flex: 1; border-bottom: 1px dotted #b8b3a2;
+  transform: translateY(-4px); min-width: 20px;
+}
+.index-passage .pass-meta {
+  font-family: var(--font-sc); font-size: 12px; letter-spacing: 1px;
+  color: var(--accent);
+}
+
 /* --- Dividers --- */
 .divider {
   display: flex; align-items: center; gap: 12px;

@@ -30,10 +30,15 @@ window.NBPassages = (() => {
 
     // Load chapters
     const chapterMeta = [];
-    for (const chSlug of subjects.chapters) {
+    const romanLabels = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
+    for (let ci = 0; ci < subjects.chapters.length; ci++) {
+      const chSlug = subjects.chapters[ci];
       const chPath = PASSAGES_ROOT + subjectDir + '/' + chSlug + '/_chapter.json';
       const chapter = await fetchJSON(chPath);
-      allChapters.push({ slug: chSlug, ...chapter });
+      chapter.slug = chSlug;
+      chapter._subjectTitle = subjects.title;
+      chapter._chapterLabel = 'Chapter ' + (romanLabels[ci] || (ci + 1));
+      allChapters.push(chapter);
       chapterMeta.push({ slug: chSlug, title: chapter.title, passages: chapter.passages });
 
       content.innerHTML += '<div class="chapter" id="ch-' + chSlug + '">';
@@ -93,20 +98,42 @@ window.NBPassages = (() => {
     box.innerHTML = '';
 
     for (const ch of allChapters) {
-      const chHeader = document.createElement('div');
-      chHeader.style.cssText = 'font-family: \'IM Fell English SC\', serif; font-size: 13px; letter-spacing: 3px; color: #6b675a; margin-top: 16px; margin-bottom: 4px;';
-      chHeader.textContent = ch.title;
-      box.appendChild(chHeader);
+      // Subject (expandable)
+      const subj = document.createElement('div');
+      subj.className = 'index-subject';
+      subj.innerHTML = '<span class="caret">▶</span>'
+        + '<span class="subj-title">' + ch._subjectTitle + '</span>'
+        + '<span class="subj-count">' + ch.passages.length + ' passages</span>';
+      box.appendChild(subj);
 
+      // Chapters container (collapsible)
+      const chapters = document.createElement('div');
+      chapters.className = 'index-chapters';
+
+      // Chapter heading
+      const chHead = document.createElement('div');
+      chHead.className = 'index-chapter';
+      chHead.textContent = ch._chapterLabel + ' — ' + ch.title;
+      chapters.appendChild(chHead);
+
+      // Passages
       for (const pm of ch.passages) {
         const a = document.createElement('a');
         a.href = '#' + pm.id;
-        a.style.cssText = 'display: flex; align-items: baseline; gap: 10px; border: none; padding: 4px 0;';
-        a.innerHTML = '<span style="font-size: 20px;">' + pm.title + '</span>'
-          + '<span style="flex: 1; border-bottom: 1px dotted #6b675a; transform: translateY(-5px);"></span>'
-          + '<span style="font-family: \'IM Fell English SC\', serif; font-size: 13px; letter-spacing: 1px; color: #6b675a;">' + pm.tags[0] + ' · №' + pm.no + '</span>';
-        box.appendChild(a);
+        a.className = 'index-passage';
+        a.innerHTML = '<span class="pass-title">' + pm.title + '</span>'
+          + '<span class="pass-dots"></span>'
+          + '<span class="pass-meta">' + pm.tags[0] + ' · №' + pm.no + '</span>';
+        chapters.appendChild(a);
       }
+
+      box.appendChild(chapters);
+
+      // Toggle expand/collapse
+      subj.onclick = () => {
+        const isOpen = chapters.classList.toggle('open');
+        subj.classList.toggle('open', isOpen);
+      };
     }
   }
 
