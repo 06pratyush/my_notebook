@@ -206,6 +206,98 @@ MAINTENANCE NOTES:
   </section>
 
   <!-- ========================= CONTENT GOES HERE ========================= -->
+
+  <div style="display: flex; align-items: center; gap: 12px; justify-content: center; margin: 10px 0;"><span style="width: 60px; height: 1px; background: #16150f;"></span><span style="font-size: 14px;">❦</span><span style="width: 60px; height: 1px; background: #16150f;"></span></div>
+
+  <!-- ml001 -->
+  <article id="ml001" style="padding: 50px 8vw;">
+    <div data-reveal style="max-width: 720px; margin: 0 auto;">
+      <div class="fl-standing" style="text-align: center; font-family: 'IM Fell English SC', serif; font-size: 13px; letter-spacing: 4px; margin-bottom: 10px;"></div>
+      <h2 style="font-family: 'IM Fell English', serif; font-weight: 400; font-size: 42px; line-height: 1.12; text-align: center; margin: 0 0 4px;">The Phases of Machine Learning</h2>
+      <div class="fl-sealrow" style="display: flex; justify-content: center; margin: 10px 0 8px;"></div>
+      <div style="text-align: center; font-style: italic; font-size: 17px; color: #6b675a; margin: 0 0 28px;">№ 10 · machine learning · ML pipeline · from ML Fundamentals</div>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 20px; text-wrap: pretty;"><span style="float: left; font-size: 76px; line-height: .68; padding: 10px 12px 0 0;">E</span>very machine learning project follows the same skeleton: a dataset is split, a model is built, and its worth is judged. The pipeline has three phases — <em>Train</em>, <em>Test</em>, and <em>Evaluate</em> — and the order is not negotiable.</p>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 20px; text-wrap: pretty;">A dataset arrives and is carved into three slices: <strong>Train</strong>, <strong>Test</strong>, and <strong>Validate</strong>. The training set feeds the model development — the algorithm learns its patterns there. The test set is held back entirely; once the model is built, it faces the test set cold, and predictions are made on data it has never seen. Finally, the evaluation phase judges the model's performance: how far the predictions stray from reality, and whether the model has truly learned the structure or merely memorised the noise.</p>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 20px; text-wrap: pretty;">The standard split is <strong>70% Train, 30% Test</strong> — though the exact proportions shift with the size of the dataset. What matters is the principle: the model must never peek at the test data during training, or the evaluation is a lie. This pipeline stands in quiet parallel to <a href="#e001">the second law of thermodynamics</a>: just as entropy demands a direction, the ML pipeline demands a sequence — train first, test after, evaluate last. <a href="#ml002">The types of learning</a> determine what happens inside each phase.</p>
+      <div class="bound" style="margin: 28px 0 0; padding-top: 16px; border-top: 1px solid #16150f;"></div>
+    </div>
+  </article>
+
+  <div style="display: flex; align-items: center; gap: 12px; justify-content: center; margin: 6px 0;"><span style="width: 60px; height: 1px; background: #16150f;"></span><span style="font-size: 14px;">❦</span><span style="width: 60px; height: 1px; background: #16150f;"></span></div>
+
+  <!-- ml002 -->
+  <article id="ml002" style="padding: 50px 8vw;">
+    <div data-reveal style="max-width: 720px; margin: 0 auto;">
+      <div class="fl-standing" style="text-align: center; font-family: 'IM Fell English SC', serif; font-size: 13px; letter-spacing: 4px; margin-bottom: 10px;"></div>
+      <h2 style="font-family: 'IM Fell English', serif; font-weight: 400; font-size: 42px; line-height: 1.12; text-align: center; margin: 0 0 4px;">Types of Machine Learning</h2>
+      <div class="fl-sealrow" style="display: flex; justify-content: center; margin: 10px 0 8px;"></div>
+      <div style="text-align: center; font-style: italic; font-size: 17px; color: #6b675a; margin: 0 0 28px;">№ 11 · machine learning · taxonomy · from ML Fundamentals</div>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 20px; text-wrap: pretty;"><span style="float: left; font-size: 76px; line-height: .68; padding: 10px 12px 0 0;">M</span>achine learning splits into three great families, and the difference between them is simply what the data carries with it when it arrives.</p>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 12px; text-wrap: pretty;"><strong>Supervised learning</strong> — the data is <em>labelled</em>. Each input comes paired with the correct answer, and the model's job is to learn the mapping from one to the other. Classification (is this email spam?) and regression (what will this house sell for?) both live here. The teacher has already marked the answers; the model merely studies them.</p>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 12px; text-wrap: pretty;"><strong>Unsupervised learning</strong> — the data is <em>unlabelled</em>. No answers arrive; only inputs. The central focus becomes <em>similarity</em>: which data points cluster together, which variables move in lockstep, which structures hide beneath the surface. K-means, PCA, and hierarchical clustering are its tools. The model must find order without being told what order looks like.</p>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0; text-wrap: pretty;"><strong>Reinforcement learning</strong> — an agent acts in an environment and receives rewards or penalties. There is no fixed dataset at all; instead, the agent learns by doing, maximising cumulative reward over time. Game-playing AIs, robotics, and recommendation engines that adapt to user behaviour all belong here. It is the most animal of the three: trial, error, and the slow shaping of behaviour by consequence.</p>
+      <div class="bound" style="margin: 28px 0 0; padding-top: 16px; border-top: 1px solid #16150f;"></div>
+    </div>
+  </article>
+
+  <div style="display: flex; align-items: center; gap: 12px; justify-content: center; margin: 6px 0;"><span style="width: 60px; height: 1px; background: #16150f;"></span><span style="font-size: 14px;">❦</span><span style="width: 60px; height: 1px; background: #16150f;"></span></div>
+
+  <!-- ml003 -->
+  <article id="ml003" style="padding: 50px 8vw;">
+    <div data-reveal style="max-width: 720px; margin: 0 auto;">
+      <div class="fl-standing" style="text-align: center; font-family: 'IM Fell English SC', serif; font-size: 13px; letter-spacing: 4px; margin-bottom: 10px;"></div>
+      <h2 style="font-family: 'IM Fell English', serif; font-weight: 400; font-size: 42px; line-height: 1.12; text-align: center; margin: 0 0 4px;">Linear Regression &amp; Its Assumptions</h2>
+      <div class="fl-sealrow" style="display: flex; justify-content: center; margin: 10px 0 8px;"></div>
+      <div style="text-align: center; font-style: italic; font-size: 17px; color: #6b675a; margin: 0 0 28px;">№ 12 · machine learning · regression · from ML Fundamentals</div>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 20px; text-wrap: pretty;"><span style="float: left; font-size: 76px; line-height: .68; padding: 10px 12px 0 0;">T</span>he goal of linear regression is deceptively simple: find the straight line that best fits the data — the line that minimises the sum of squared errors between what the model predicts and what actually happened. The equation is <em>y = mx + c</em>, generated from historical data where <em>x</em> is the input and <em>y</em> is the output.</p>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 16px; text-wrap: pretty;">Consider a small dataset: when x = 0, y = 0; x = 1, y = 2; x = 2, y = 5; x = 3, y = 9; x = 4, y = 15; x = 5, y = 21. The predicted values ŷ might be 0, 6, 9, 13, 16, 20 — giving errors of 0, −4, −4, −4, −1, +1. The line does not pass through every point; it finds the compromise that loses the least across all of them. But before applying <em>any</em> model, one must perform <strong>EDA</strong> — exploratory data analysis — to understand the data's shape before demanding it fit a line.</p>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 12px; text-wrap: pretty;">The method rests on five assumptions, and if any one of them is violated, the model's conclusions become unreliable:</p>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 8px; text-wrap: pretty;">→ <strong>Linearity</strong> — the relationship between x and y must be linear. Either x ∝ y or y ∝ x; the data must trend in a straight line, not a curve.</p>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 8px; text-wrap: pretty;">→ <strong>Homoscedasticity</strong> — the error term must have constant variance. The residuals should not follow any trend; they must be near-constant in spread, neither fanning out nor narrowing as x increases. (<a href="#ml004">The note on residual analysis</a> explores this visually.)</p>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 8px; text-wrap: pretty;">→ <strong>Independence</strong> — error terms should be independent of each other. No residual should influence another; the errors must not be correlated across observations.</p>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 8px; text-wrap: pretty;">→ <strong>Normality</strong> — error terms should be normally distributed, with the mean of residuals approximately zero. The bell curve of errors should centre on the line.</p>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0; text-wrap: pretty;">→ <strong>No multicollinearity</strong> — independent variables should have no relation to each other. No redundant variables; each predictor must stand on its own. This connects to <a href="#ml006">the Pearson correlation coefficient</a>, which measures exactly such relationships.</p>
+      <div class="bound" style="margin: 28px 0 0; padding-top: 16px; border-top: 1px solid #16150f;"></div>
+    </div>
+  </article>
+
+  <div style="display: flex; align-items: center; gap: 12px; justify-content: center; margin: 6px 0;"><span style="width: 60px; height: 1px; background: #16150f;"></span><span style="font-size: 14px;">❦</span><span style="width: 60px; height: 1px; background: #16150f;"></span></div>
+
+  <!-- ml004 -->
+  <article id="ml004" style="padding: 50px 8vw;">
+    <div data-reveal style="max-width: 720px; margin: 0 auto;">
+      <div class="fl-standing" style="text-align: center; font-family: 'IM Fell English SC', serif; font-size: 13px; letter-spacing: 4px; margin-bottom: 10px;"></div>
+      <h2 style="font-family: 'IM Fell English', serif; font-weight: 400; font-size: 42px; line-height: 1.12; text-align: center; margin: 0 0 4px;">Residual Analysis</h2>
+      <div class="fl-sealrow" style="display: flex; justify-content: center; margin: 10px 0 8px;"></div>
+      <div style="text-align: center; font-style: italic; font-size: 17px; color: #6b675a; margin: 0 0 28px;">№ 13 · machine learning · diagnostics · from ML Fundamentals</div>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 20px; text-wrap: pretty;"><span style="float: left; font-size: 76px; line-height: .68; padding: 10px 12px 0 0;">A</span> residual is the gap between what the model predicted and what actually happened — the error for a single observation. Plot every residual against the input variable <em>x</em>, and the resulting scatter plot tells you whether the <a href="#ml003">assumptions of linear regression</a> hold or have been violated.</p>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 16px; text-wrap: pretty;">Two shapes matter most. In a <strong>homoscedastic</strong> plot, the residuals scatter uniformly across the graph — a flat band of noise with no pattern, the error does not change with change in x. This is what you want: the model's mistakes are evenly distributed, and the assumption of constant variance is satisfied.</p>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0; text-wrap: pretty;">In a <strong>heteroscedastic</strong> plot, the residuals fan out — the error changes with change in x, growing wider (or narrower) as x increases. The spread of residuals is not constant; the model is more confident in some regions and less in others. When this pattern appears, the standard errors are wrong, confidence intervals are unreliable, and the model needs attention — perhaps a transformation of the variables, or a different model entirely.</p>
+      <div class="bound" style="margin: 28px 0 0; padding-top: 16px; border-top: 1px solid #16150f;"></div>
+    </div>
+  </article>
+
+  <div style="display: flex; align-items: center; gap: 12px; justify-content: center; margin: 6px 0;"><span style="width: 60px; height: 1px; background: #16150f;"></span><span style="font-size: 14px;">❦</span><span style="width: 60px; height: 1px; background: #16150f;"></span></div>
+
+  <!-- ml005 -->
+  <article id="ml005" style="padding: 50px 8vw;">
+    <div data-reveal style="max-width: 720px; margin: 0 auto;">
+      <div class="fl-standing" style="text-align: center; font-family: 'IM Fell English SC', serif; font-size: 13px; letter-spacing: 4px; margin-bottom: 10px;"></div>
+      <h2 style="font-family: 'IM Fell English', serif; font-weight: 400; font-size: 42px; line-height: 1.12; text-align: center; margin: 0 0 4px;">Performance Metrics</h2>
+      <div class="fl-sealrow" style="display: flex; justify-content: center; margin: 10px 0 8px;"></div>
+      <div style="text-align: center; font-style: italic; font-size: 17px; color: #6b675a; margin: 0 0 28px;">№ 14 · machine learning · evaluation · from ML Fundamentals</div>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 20px; text-wrap: pretty;"><span style="float: left; font-size: 76px; line-height: .68; padding: 10px 12px 0 0;">H</span>ow do you judge a model's worth? Not by how well it fits the training data — any model can memorise — but by how honestly it captures the underlying structure. Seven metrics form the standard toolkit, each revealing a different facet of the model's performance.</p>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 12px; text-wrap: pretty;"><strong>1) R² (Coefficient of Determination)</strong> — lies between 0 and 1. Equals 1 − Σ(y − ŷ)² / Σ(y − ȳ)², where y is the actual output, ŷ is the predicted output, and ȳ is the mean of actuals. Closer to 1 means less error, better prediction. Closer to 0 means the model explains almost none of the variance. This is also called the <em>goodness of fit</em> — the fraction of the total variation that the model accounts for.</p>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 12px; text-wrap: pretty;"><strong>2) Adjusted R²</strong> — equals 1 − (R² − 1)(n − 1) / (n − k − 1), where k is the number of input dimensions, variables, or attributes, and n is the number of observations. Unlike plain R², it penalises the model for adding useless variables. A model with ten predictors and the same R² as one with two is not actually better — the adjusted R² knows this.</p>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 12px; text-wrap: pretty;"><strong>3) Mean Squared Error (MSE)</strong> — Σ(y − ŷ)² / N. The average of the squared differences. Squaring punishes large errors more than small ones; a single wild prediction inflates the MSE disproportionately.</p>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 12px; text-wrap: pretty;"><strong>4) Root Mean Squared Error (RMSE)</strong> — √MSE. Brings the error back into the original units of y, making it interpretable: "the typical prediction is off by this many units."</p>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 12px; text-wrap: pretty;"><strong>5) Mean Absolute Error (MAE)</strong> — Σ|y − ŷ| / N. The average of the absolute differences. More robust to outliers than MSE because it does not square the errors; every mistake counts equally.</p>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0 0 12px; text-wrap: pretty;"><strong>6) Mean Absolute Percentage Error (MAPE)</strong> — MAE × 100, expressed as a percentage. Useful for comparing models across datasets with different scales: "the model's predictions are off by X% on average."</p>
+      <p style="font-size: 20px; line-height: 1.82; margin: 0; text-wrap: pretty;"><strong>7) Pearson Correlation Coefficient (r)</strong> — measures how two variables are correlated. Equals Σ(xᵢ − x̄)(yᵢ − ȳ) / √[Σ(xᵢ − x̄)² × Σ(yᵢ − ȳ)²]. Ranges from −1 (perfect negative correlation) through 0 (no correlation) to +1 (perfect positive correlation). It does not measure causation — only the strength and direction of the linear relationship between two variables. (<a href="#ml003">The note on multicollinearity</a> uses this to detect redundant predictors.)</p>
+      <div class="bound" style="margin: 28px 0 0; padding-top: 16px; border-top: 1px solid #16150f;"></div>
+    </div>
+  </article>
+
   <!-- Add your passages, articles, proem, index, and colophon below this line -->
 
 </div>
@@ -236,7 +328,13 @@ class Component extends DCLogic {
       const STANDING = { owned: 'Owned · sealed', held: 'Held · awaiting the trial', progress: 'A Living Work · in progress', spark: 'A Spark · caught in passing', question: 'An Open Question · unanswered' };
 
       // ===== PASSAGES — add your content here =====
-      const PASSAGES = [];
+      const PASSAGES = [
+        { id: 'ml001', no: 10, title: 'The Phases of Machine Learning', status: 'held', tags: ['machine learning', 'ML pipeline'], date: '2026-07-24', links: ['ml002','ml003'] },
+        { id: 'ml002', no: 11, title: 'Types of Machine Learning', status: 'held', tags: ['machine learning', 'taxonomy'], date: '2026-07-24', links: ['ml001'] },
+        { id: 'ml003', no: 12, title: 'Linear Regression & Its Assumptions', status: 'held', tags: ['machine learning', 'regression'], date: '2026-07-24', links: ['ml001','ml004','ml005','ml006'] },
+        { id: 'ml004', no: 13, title: 'Residual Analysis', status: 'held', tags: ['machine learning', 'diagnostics'], date: '2026-07-24', links: ['ml003'] },
+        { id: 'ml005', no: 14, title: 'Performance Metrics', status: 'held', tags: ['machine learning', 'evaluation'], date: '2026-07-24', links: ['ml003','ml006'] },
+      ];
       const byId = {}; PASSAGES.forEach(p => byId[p.id] = p);
 
       // persisted overrides
