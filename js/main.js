@@ -13,7 +13,11 @@
   // 3. Init admin early so setPassageMeta calls from NBPassages land
   NBAdmin.init({});
 
-  // 4. Load the current notebook and render page.
+  // 4. AI panel — available regardless of whether any notebook exists yet.
+  NBAIPanel.init();
+  document.getElementById('fbtn-ai').onclick = () => NBAIPanel.toggle();
+
+  // 5. Load the current notebook and render page.
   //    With no notebooks yet, render the empty state and stop — the overlays,
   //    search and bind picker all operate on passages that do not exist yet.
   if (!nb) {
@@ -22,13 +26,13 @@
   }
   const { allPassages } = await NBPassages.loadNotebook(nb.slug);
 
-  // 5. Re-arm admin edit controls now that DOM exists
+  // 6. Re-arm admin edit controls now that DOM exists
   if (NBAuth.isAdmin()) NBAdmin.addEditControls();
 
-  // 6. Search
+  // 7. Search
   NBSearch.init();
 
-  // 7. KaTeX auto-render
+  // 8. KaTeX auto-render
   if (typeof renderMathInElement !== 'undefined') {
     renderMathInElement(document.body, {
       delimiters: [
@@ -73,7 +77,7 @@
     if (!isOpen) { el.style.display = 'flex'; NBCalendar.build(el, allPassages); }
   };
 
-  // 11. Escape closes overlays
+  // 11. Escape closes overlays (the AI panel has its own × and persists by design)
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAllOverlays(); });
 
   // 12. Bind — tree picker overlay for selective print
