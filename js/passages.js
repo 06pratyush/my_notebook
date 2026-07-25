@@ -49,6 +49,18 @@ window.NBPassages = (() => {
 
     // Phase 3: render.
     renderNode(content, rootNode, notebookSlug);
+
+    // A notebook that exists but holds nothing yet — awaiting its first upload.
+    if (!allPassages.length) {
+      const host = content.querySelector('#notebook-' + notebookSlug) || content;
+      host.insertAdjacentHTML('beforeend',
+        '<div class="nb-empty">' +
+          'This book is empty. Upload a .txt, .pdf or .md file and it will be ' +
+          'converted, dated, and filed here.' +
+        '</div>'
+      );
+    }
+
     content.insertAdjacentHTML('beforeend',
       '<div class="divider"><span class="divider-line"></span><span class="divider-mark">❦</span><span class="divider-line"></span></div>'
     );
@@ -202,6 +214,11 @@ window.NBPassages = (() => {
     box.innerHTML = '';
 
     const topBranches = flatTree.filter(n => n.depth === 1);
+
+    if (!topBranches.length) {
+      box.innerHTML = '<div class="nb-empty">Nothing filed in this book yet.</div>';
+      return;
+    }
 
     for (const branch of topBranches) {
       const subj = document.createElement('div');
