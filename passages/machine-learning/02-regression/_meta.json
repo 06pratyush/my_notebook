@@ -1,8 +1,0 @@
-{
-  "title": "Regression",
-  "kind": "chapter",
-  "passages": [
-    { "id": "ml003", "no": 3, "title": "Linear Regression & Its Assumptions", "tags": ["regression"], "date": "2026-07-24", "links": ["ml001", "ml004", "ml005"] },
-    { "id": "ml004", "no": 4, "title": "Residual Analysis", "tags": ["diagnostics"], "date": "2026-07-24", "links": ["ml003"] }
-  ]
-}

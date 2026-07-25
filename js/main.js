@@ -13,7 +13,13 @@
   // 3. Init admin early so setPassageMeta calls from NBPassages land
   NBAdmin.init({});
 
-  // 4. Load the current notebook and render page
+  // 4. Load the current notebook and render page.
+  //    With no notebooks yet, render the empty state and stop — the overlays,
+  //    search and bind picker all operate on passages that do not exist yet.
+  if (!nb) {
+    await NBPassages.renderEmptyState();
+    return;
+  }
   const { allPassages } = await NBPassages.loadNotebook(nb.slug);
 
   // 5. Re-arm admin edit controls now that DOM exists
@@ -22,12 +28,7 @@
   // 6. Search
   NBSearch.init();
 
-  // 7. Render diagrams
-  try { NBRoughDiagrams.renderAll(); } catch (e) { console.warn('Rough.js diagrams:', e); }
-  try { NBD3Plots.renderAll(); } catch (e) { console.warn('D3.js plots:', e); }
-  try { NBMetricsViz.renderAll(); } catch (e) { console.warn('Metrics viz:', e); }
-
-  // 8. KaTeX auto-render
+  // 7. KaTeX auto-render
   if (typeof renderMathInElement !== 'undefined') {
     renderMathInElement(document.body, {
       delimiters: [

@@ -75,6 +75,31 @@ window.NBPassages = (() => {
     currentNotebook = null;
   }
 
+  /**
+   * Shown when the manifest lists no notebooks — the state this project starts in,
+   * before anything has been uploaded.
+   */
+  async function renderEmptyState() {
+    reset();
+    const content = document.getElementById('fl-content');
+    if (!content) return;
+
+    const frontHTML = await fetchHTML('components/frontispiece.html');
+    content.innerHTML = frontHTML +
+      '<section id="index" style="padding: 60px 8vw 120px;">' +
+        '<div style="max-width: 46ch; margin: 0 auto; text-align: center;">' +
+          '<div style="font-family: \'IM Fell English SC\', serif; font-size: 14px; letter-spacing: 5px; margin-bottom: 14px;">The Index</div>' +
+          '<h2 style="font-family: \'IM Fell English\', serif; font-weight: 400; font-size: 40px; margin: 0 0 18px;">Nothing bound yet</h2>' +
+          '<p style="font-style: italic; font-size: 19px; line-height: 1.6; color: #6b675a; margin: 0;">' +
+            'This notebook is empty. Upload a .txt, .pdf or .md file and it will be ' +
+            'converted, dated, and filed into its notebook here.' +
+          '</p>' +
+        '</div>' +
+      '</section>';
+
+    if (window.NBNav) NBNav.init([{ id: 'index', label: 'Index', glyph: '·' }]);
+  }
+
   async function walkTree(dirPath, meta, kindHint, depth) {
     const node = {
       dirPath,
@@ -297,5 +322,5 @@ window.NBPassages = (() => {
       .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
 
-  return { loadNotebook, getAllPassages, getFlatTree, getRootNode, getCurrentNotebook, getLevelLabel };
+  return { loadNotebook, renderEmptyState, getAllPassages, getFlatTree, getRootNode, getCurrentNotebook, getLevelLabel };
 })();

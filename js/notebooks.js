@@ -10,7 +10,13 @@ window.NBNotebooks = (() => {
   async function init() {
     manifest = await fetchJSON(MANIFEST);
     const list = manifest.notebooks || [];
-    if (!list.length) throw new Error('No notebooks in ' + MANIFEST);
+
+    // An empty manifest is a valid state: the notebook is waiting for its first upload.
+    if (!list.length) {
+      currentSlug = null;
+      renderSwitcher();
+      return null;
+    }
 
     const params = new URLSearchParams(location.search);
     const requested = params.get('nb');
@@ -43,7 +49,8 @@ window.NBNotebooks = (() => {
   }
 
   function currentNotebook() {
-    return manifest.notebooks.find(n => n.slug === currentSlug);
+    if (!manifest || !currentSlug) return null;
+    return manifest.notebooks.find(n => n.slug === currentSlug) || null;
   }
 
   function list() { return (manifest && manifest.notebooks) || []; }
