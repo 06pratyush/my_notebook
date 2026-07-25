@@ -268,6 +268,113 @@ body.admin-mode .artifact-container:empty::before {
   color: var(--accent);
 }
 
+/* ============================================
+   AI SIDE PANEL
+   ============================================ */
+:root { --ai-width: 380px; }
+
+#fl-ai {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: var(--ai-width); z-index: 70;
+  display: flex; flex-direction: column;
+  background: var(--paper);
+  border-left: 1.5px solid var(--ink);
+  transform: translateX(100%);
+  transition: transform .26s ease;
+}
+#fl-ai.open { transform: none; }
+
+/* The notebook reflows beside the panel rather than being covered by it. */
+#fl-content, #fl-toolbar, #fl-rail { transition: margin-right .26s ease, right .26s ease; }
+body.ai-open #fl-content { margin-right: var(--ai-width); }
+body.ai-open #fl-toolbar { right: var(--ai-width); }
+body.ai-open #fl-rail { right: calc(var(--ai-width) + 12px); }
+
+.ai-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 14px; border-bottom: 1px solid var(--ink); flex: none;
+}
+.ai-title { font-family: var(--font-sc); font-size: 13px; letter-spacing: 4px; }
+.ai-close {
+  background: none; border: none; cursor: pointer;
+  font-size: 24px; line-height: 1; color: var(--ink); padding: 0 4px;
+}
+.ai-close:hover { opacity: .6; }
+
+.ai-conn { display: flex; gap: 6px; padding: 10px 14px 6px; flex: none; }
+.ai-model {
+  flex: 1; min-width: 0;
+  font-family: var(--font-body); font-size: 14px;
+  color: var(--ink); background: var(--paper);
+  border: 1px solid var(--ink); padding: 4px 8px; outline: none;
+}
+.ai-reconnect { padding: 4px 10px; font-size: 15px; }
+
+.ai-status {
+  padding: 4px 14px 10px; font-size: 13px; font-style: italic;
+  color: var(--accent); flex: none; line-height: 1.45;
+}
+.ai-status.error { color: #a00; }
+.ai-status.ok { color: #3a6b3a; }
+
+.ai-messages {
+  flex: 1; overflow-y: auto; padding: 8px 14px 14px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.ai-msg {
+  font-family: var(--font-body); font-size: 16px; line-height: 1.6;
+  padding: 9px 12px; white-space: pre-wrap; word-wrap: break-word;
+}
+.ai-user {
+  background: rgba(22,21,15,0.06); border: 1px solid rgba(22,21,15,.18);
+  align-self: flex-end; max-width: 88%;
+}
+.ai-assistant { border-left: 2px solid var(--ink); padding-left: 12px; }
+.ai-assistant.streaming::after {
+  content: '▍'; animation: ai-blink 1s steps(2) infinite; margin-left: 1px;
+}
+@keyframes ai-blink { 50% { opacity: 0; } }
+.ai-msg.ai-error { color: #a00; font-style: italic; border-left-color: #a00; }
+
+.ai-help {
+  font-size: 14px; line-height: 1.6; color: var(--accent-dark);
+  border: 1px dashed var(--accent); padding: 12px 14px;
+}
+.ai-help-title { font-family: var(--font-sc); font-size: 12px; letter-spacing: 3px; margin-bottom: 8px; }
+.ai-help ol { margin: 0; padding-left: 18px; }
+.ai-help li { margin-bottom: 7px; }
+.ai-help code {
+  display: block; margin-top: 4px; padding: 5px 7px;
+  background: rgba(22,21,15,0.06); font-size: 12.5px;
+  word-break: break-all; white-space: pre-wrap;
+}
+.ai-help-note {
+  margin-top: 10px; padding-top: 9px; border-top: 1px solid rgba(22,21,15,.15);
+  font-style: italic; font-size: 13px; color: var(--accent);
+}
+
+.ai-composer {
+  flex: none; display: flex; gap: 7px; align-items: flex-end;
+  padding: 10px 14px 14px; border-top: 1px solid var(--ink);
+}
+.ai-input {
+  flex: 1; min-width: 0; resize: none;
+  font-family: var(--font-body); font-size: 15px; line-height: 1.5;
+  color: var(--ink); background: var(--paper);
+  border: 1px solid var(--ink); padding: 7px 10px; outline: none;
+}
+.ai-send { flex: none; }
+
+/* On narrow screens the panel covers the page instead of squeezing it. */
+@media (max-width: 860px) {
+  :root { --ai-width: 100vw; }
+  body.ai-open #fl-content { margin-right: 0; }
+  body.ai-open #fl-toolbar { right: 0; }
+  body.ai-open #fl-rail { display: none; }
+}
+
+@media print { #fl-ai { display: none !important; } }
+
 /* --- Empty book / index state --- */
 .nb-empty {
   max-width: 46ch; margin: 0 auto; padding: 36px 8vw 60px;
