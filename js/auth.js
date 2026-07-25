@@ -5,7 +5,7 @@
 window.NBAuth = (() => {
   const TOKEN_KEY = 'nb_github_token';
   const USER_KEY = 'nb_github_user';
-  const AUTHORED_USER = 'TheQMLGuy';
+  const AUTHORED_USER = '06pratyush';
   const API = 'https://api.github.com';
 
   let currentUser = null;

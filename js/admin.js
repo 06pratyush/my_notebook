@@ -3,7 +3,7 @@
  * Uses GitHub Contents API to save changes.
  */
 window.NBAdmin = (() => {
-  const REPO = 'TheQMLGuy/my-notebook';
+  const REPO = '06pratyush/my_notebook';
   const BRANCH = 'main';
   let passMeta = {}; // id -> { path, sha }
 
