@@ -26,6 +26,7 @@
 
   <!-- ============================ TOOLBAR ============================ -->
   <div id="fl-toolbar">
+    <div id="fl-notebooks" class="fl-notebooks"></div>
     <input id="fl-search" type="text" placeholder="Search the book…">
     <div style="display: flex; flex-wrap: wrap; gap: 6px;">
       <button id="fbtn-atlas" class="fl-btn">✳ Atlas</button>
@@ -45,12 +46,13 @@
   <div id="fl-orrery" class="fl-overlay"></div>
   <div id="fl-chron" class="fl-overlay"></div>
   <div id="fl-cal" class="fl-overlay"></div>
+  <div id="fl-bind" class="fl-overlay"></div>
 
   <!-- ============================ LOGIN MODAL ============================ -->
   <div id="fl-login">
     <div class="login-card">
       <h3>Admin Login</h3>
-      <p style="font-size: 15px; color: #6b675a; margin: 0 0 16px; line-height: 1.5;">Enter a GitHub Personal Access Token with <code>repo</code> scope. Only <strong>TheQMLGuy</strong> account is authorised.</p>
+      <p style="font-size: 15px; color: #6b675a; margin: 0 0 16px; line-height: 1.5;">Enter a GitHub Personal Access Token with <code>repo</code> scope. Only <strong>06pratyush</strong> account is authorised.</p>
       <div id="fl-login-error" class="login-error" style="display: none;"></div>
       <input id="fl-login-token" type="password" placeholder="ghp_xxxxxxxxxxxx">
       <div class="login-btns">
@@ -70,14 +72,13 @@
   <script src="js/navigation.js"></script>
   <script src="js/search.js"></script>
   <script src="js/admin.js"></script>
+  <script src="js/notebooks.js"></script>
   <script src="js/passages.js"></script>
   <script src="js/overlays/atlas.js"></script>
   <script src="js/overlays/orrery.js"></script>
   <script src="js/overlays/chronicle.js"></script>
   <script src="js/overlays/calendar.js"></script>
-  <script src="js/diagrams/rough-diagrams.js"></script>
-  <script src="js/diagrams/d3-plots.js"></script>
-  <script src="js/diagrams/metrics-viz.js"></script>
+  <script src="js/overlays/bind.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

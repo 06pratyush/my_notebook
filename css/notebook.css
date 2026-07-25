@@ -62,6 +62,20 @@ mark { background: rgba(22,21,15,0.14); color: inherit; padding: 0 1px; }
   width: 190px; outline: none;
 }
 
+/* --- Notebook switcher tabs --- */
+.fl-notebooks {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding-right: 10px; margin-right: 4px;
+  border-right: 1px solid var(--ink);
+}
+.fl-notebooks:empty { display: none; }
+.nb-tab {
+  font-family: var(--font-sc); font-size: 13px; letter-spacing: 2px;
+}
+@media (max-width: 900px) {
+  .fl-notebooks { border-right: none; padding-right: 0; margin-right: 0; }
+}
+
 /* --- Rail --- */
 #fl-rail {
   position: fixed; right: 12px; top: 50%; transform: translateY(-50%);
@@ -254,6 +268,13 @@ body.admin-mode .artifact-container:empty::before {
   color: var(--accent);
 }
 
+/* --- Empty book / index state --- */
+.nb-empty {
+  max-width: 46ch; margin: 0 auto; padding: 36px 8vw 60px;
+  text-align: center; font-style: italic;
+  font-size: 19px; line-height: 1.6; color: var(--accent);
+}
+
 /* --- Dividers --- */
 .divider {
   display: flex; align-items: center; gap: 12px;
@@ -280,7 +301,56 @@ body.admin-mode .artifact-container:empty::before {
   [data-reveal] { opacity: 1 !important; transform: none !important; }
   .dimmed { opacity: 1 !important; }
   article, section { break-inside: avoid; }
+  article.nb-print-hide { display: none !important; }
 }
+
+/* --- Bind tree picker --- */
+.bind-body {
+  position: absolute; inset: 68px 34px 22px; overflow: auto;
+  padding: 0 6px;
+}
+.bind-subhead {
+  font-family: var(--font-sc); font-size: 12px; letter-spacing: 4px;
+  color: var(--accent); margin: 0 0 12px 4px;
+}
+.bind-tree {
+  border-top: 1px solid var(--ink); padding-top: 8px;
+}
+.bind-hint {
+  margin-top: 14px; font-style: italic; color: var(--accent);
+  font-size: 14px; padding: 6px 4px 10px;
+}
+.bind-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 4px 6px; cursor: default; user-select: none;
+}
+.bind-row:hover { background: rgba(22,21,15,0.04); }
+.bind-caret {
+  display: inline-block; width: 12px; font-size: 10px;
+  text-align: center; transition: transform .18s;
+  color: var(--accent); cursor: pointer;
+}
+.bind-caret.open { transform: rotate(90deg); }
+.bind-cb {
+  width: 14px; height: 14px; cursor: pointer;
+  accent-color: var(--ink);
+}
+.bind-label {
+  font-family: var(--font-body); font-size: 16px;
+  display: flex; align-items: baseline; gap: 10px;
+  cursor: pointer; flex: 1;
+}
+.bind-kind {
+  font-family: var(--font-sc); font-size: 11px; letter-spacing: 2px;
+  color: var(--accent); min-width: 62px;
+}
+.bind-title { color: var(--ink); }
+.bind-leaf .bind-title { font-size: 15px; }
+.bind-kids {
+  max-height: 0; overflow: hidden;
+  transition: max-height .3s ease;
+}
+.bind-kids.open { max-height: none; overflow: visible; }
 
 /* --- Login Modal --- */
 #fl-login {

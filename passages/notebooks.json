@@ -1,0 +1,18 @@
+{
+  "notebooks": [
+    {
+      "slug": "machine-learning",
+      "title": "Machine Learning",
+      "subject": "Artificial Intelligence",
+      "description": "",
+      "created": "2026-07-26"
+    },
+    {
+      "slug": "operating-systems",
+      "title": "Operating Systems",
+      "subject": "Computer Science",
+      "description": "",
+      "created": "2026-07-26"
+    }
+  ]
+}
