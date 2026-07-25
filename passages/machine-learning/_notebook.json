@@ -1,0 +1,5 @@
+{
+  "title": "Machine Learning",
+  "subject": "Artificial Intelligence",
+  "children": ["01-foundations", "02-regression", "03-evaluation"]
+}

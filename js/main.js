@@ -7,25 +7,27 @@
   // 1. Auth
   NBAuth.init();
 
-  // 2. Load all passages and render page
-  const { allPassages } = await NBPassages.loadAll();
+  // 2. Notebook switcher (reads manifest, decides current notebook from ?nb=)
+  const nb = await NBNotebooks.init();
 
-  // 3. Init admin (needs passage metadata for save paths)
-  const adminMeta = {};
-  allPassages.forEach(p => {
-    adminMeta[p.id] = { path: 'passages/machine-learning/' + getChapterSlug(p) + '/' + p.id + '.html' };
-  });
-  NBAdmin.init(adminMeta);
+  // 3. Init admin early so setPassageMeta calls from NBPassages land
+  NBAdmin.init({});
 
-  // 4. Search
+  // 4. Load the current notebook and render page
+  const { allPassages } = await NBPassages.loadNotebook(nb.slug);
+
+  // 5. Re-arm admin edit controls now that DOM exists
+  if (NBAuth.isAdmin()) NBAdmin.addEditControls();
+
+  // 6. Search
   NBSearch.init();
 
-  // 5. Render diagrams
+  // 7. Render diagrams
   try { NBRoughDiagrams.renderAll(); } catch (e) { console.warn('Rough.js diagrams:', e); }
   try { NBD3Plots.renderAll(); } catch (e) { console.warn('D3.js plots:', e); }
   try { NBMetricsViz.renderAll(); } catch (e) { console.warn('Metrics viz:', e); }
 
-  // 6. KaTeX auto-render
+  // 8. KaTeX auto-render
   if (typeof renderMathInElement !== 'undefined') {
     renderMathInElement(document.body, {
       delimiters: [
@@ -38,50 +40,50 @@
     });
   }
 
-  // 7. Reveal animation
+  // 9. Reveal animation
   const io = new IntersectionObserver((entries) => {
     entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('seen'); io.unobserve(en.target); } });
   }, { threshold: 0.1 });
   document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
 
-  // 8. Overlay buttons
+  // 10. Overlay buttons
   document.getElementById('fbtn-atlas').onclick = () => {
     const el = document.getElementById('fl-atlas');
-    const open = el.style.display !== 'none';
+    const isOpen = el.style.display === 'flex';
     closeAllOverlays();
-    if (!open) { el.style.display = 'flex'; NBAtlas.build(el, allPassages); }
+    if (!isOpen) { el.style.display = 'flex'; NBAtlas.build(el, allPassages); }
   };
   document.getElementById('fbtn-orrery').onclick = () => {
     const el = document.getElementById('fl-orrery');
-    const open = el.style.display !== 'none';
+    const isOpen = el.style.display === 'flex';
     closeAllOverlays();
-    if (!open) { el.style.display = 'flex'; NBOrrery.build(el, allPassages); }
+    if (!isOpen) { el.style.display = 'flex'; NBOrrery.build(el, allPassages); }
   };
   document.getElementById('fbtn-chron').onclick = () => {
     const el = document.getElementById('fl-chron');
-    const open = el.style.display !== 'none';
+    const isOpen = el.style.display === 'flex';
     closeAllOverlays();
-    if (!open) { el.style.display = 'flex'; NBChronicle.build(el, allPassages); }
+    if (!isOpen) { el.style.display = 'flex'; NBChronicle.build(el, allPassages); }
   };
   document.getElementById('fbtn-cal').onclick = () => {
     const el = document.getElementById('fl-cal');
-    const open = el.style.display !== 'none';
+    const isOpen = el.style.display === 'flex';
     closeAllOverlays();
-    if (!open) { el.style.display = 'flex'; NBCalendar.build(el, allPassages); }
+    if (!isOpen) { el.style.display = 'flex'; NBCalendar.build(el, allPassages); }
   };
 
-  // 9. Escape key closes overlays
+  // 11. Escape closes overlays
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAllOverlays(); });
 
-  // 10. Print
+  // 12. Bind — tree picker overlay for selective print
   document.getElementById('fbtn-bind').onclick = () => {
+    const el = document.getElementById('fl-bind');
+    const isOpen = el.style.display === 'flex';
     closeAllOverlays();
-    document.querySelectorAll('[data-reveal]').forEach(el => el.classList.add('seen'));
-    document.querySelectorAll('article').forEach(el => el.classList.remove('dimmed'));
-    setTimeout(() => window.print(), 120);
+    if (!isOpen) { el.style.display = 'flex'; NBBind.build(el); }
   };
 
-  // 11. Internal links
+  // 13. Internal links (in-page anchor navigation)
   document.addEventListener('click', (e) => {
     const a = e.target.closest && e.target.closest('a[href^="#"]');
     if (!a) return;
@@ -93,19 +95,16 @@
     }
   });
 
+  // 14. If URL loaded with a hash (e.g. from a shared link), jump to it after render
+  if (location.hash) {
+    const id = location.hash.slice(1);
+    if (document.getElementById(id)) setTimeout(() => NBNav.jump(id), 50);
+  }
+
   function closeAllOverlays() {
-    ['fl-atlas', 'fl-orrery', 'fl-chron', 'fl-cal'].forEach(id => {
+    ['fl-atlas', 'fl-orrery', 'fl-chron', 'fl-cal', 'fl-bind'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.style.display = 'none';
     });
   }
-
-  function getChapterSlug(passage) {
-    // Determine chapter slug from passage id
-    if (passage.id.startsWith('ml001') || passage.id.startsWith('ml002')) return '01-foundations';
-    if (passage.id.startsWith('ml003') || passage.id.startsWith('ml004')) return '02-regression';
-    if (passage.id.startsWith('ml005')) return '03-evaluation';
-    return '00-uncategorised';
-  }
-
 })();

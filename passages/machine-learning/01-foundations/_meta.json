@@ -1,5 +1,6 @@
 {
   "title": "Foundations",
+  "kind": "chapter",
   "passages": [
     { "id": "ml001", "no": 1, "title": "The Phases of Machine Learning", "tags": ["ML pipeline"], "date": "2026-07-24", "links": ["ml002", "ml003"] },
     { "id": "ml002", "no": 2, "title": "Types of Machine Learning", "tags": ["taxonomy"], "date": "2026-07-24", "links": ["ml001"] }
